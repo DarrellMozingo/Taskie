@@ -1,8 +1,6 @@
-**/*.suo
-**/*.user
+*.suo
+*.user
+*.resharper
+_ReSharper*/
 bin
 obj
-_ReSharper*
-**/*.csproj.user
-**/*.resharper.user
-**/*.resharper
