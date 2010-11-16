@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
-using StandardSampleApplication.Services;
+using StandardApp.Services;
 using Taskie;
 
-namespace StandardSampleApplication.Tasks
+namespace StandardApp.Tasks
 {
 	public class ProcessCustomersTask : ITask
 	{

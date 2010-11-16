@@ -1,4 +1,4 @@
-namespace StandardSampleApplication.Domain
+namespace StandardApp.Domain
 {
 	public class Customer
 	{

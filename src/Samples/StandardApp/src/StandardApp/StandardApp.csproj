@@ -8,8 +8,8 @@
     <ProjectGuid>{E427DAA0-9DB6-4105-8C86-DA504D5B47A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StandardSampleApplication</RootNamespace>
-    <AssemblyName>StandardSampleApplication</AssemblyName>
+    <RootNamespace>StandardApp</RootNamespace>
+    <AssemblyName>StandardApp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,20 +35,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator.NinjectAdapter">
-      <HintPath>..\tools\Ninject\CommonServiceLocator.NinjectAdapter.dll</HintPath>
+      <HintPath>..\..\tools\Ninject\CommonServiceLocator.NinjectAdapter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\tools\CommonServiceLocator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\tools\CommonServiceLocator\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
-      <HintPath>..\tools\Ninject\Ninject.dll</HintPath>
+      <HintPath>..\..\tools\Ninject\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="Taskie">
-      <HintPath>..\tools\Taskie\Taskie.dll</HintPath>
+      <HintPath>..\..\tools\Taskie\Taskie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

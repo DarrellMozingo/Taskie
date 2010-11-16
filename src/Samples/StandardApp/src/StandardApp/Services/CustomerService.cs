@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using StandardSampleApplication.Domain;
+using StandardApp.Domain;
 
-namespace StandardSampleApplication.Services
+namespace StandardApp.Services
 {
 	public interface ICustomerService
 	{

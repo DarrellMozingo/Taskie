@@ -3,7 +3,7 @@ using Microsoft.Practices.ServiceLocation;
 using Ninject;
 using Taskie;
 
-namespace StandardSampleApplication
+namespace StandardApp
 {
 	public class Application : IApplication
 	{
