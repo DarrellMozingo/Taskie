@@ -7,6 +7,23 @@ namespace Taskie.UnitTests
 	public class ApplicationRunnerFixture
 	{
 		[TestFixture]
+		public class When_constructing_the_main_application_runner : SpecBase
+		{
+			private readonly IApplication _fakeApplicaton = A.Fake<IApplication>();
+
+			protected override void because()
+			{
+				new ApplicationRunner(_fakeApplicaton);
+			}
+
+			[Test]
+			public void Should_start_up_the_application()
+			{
+				A.CallTo(() => _fakeApplicaton.Startup()).MustHaveHappened();
+			}
+		}
+
+		[TestFixture]
 		public class When_disposing_of_the_main_application_runner : SpecBase
 		{
 			private readonly IApplication _fakeApplicaton = A.Fake<IApplication>();

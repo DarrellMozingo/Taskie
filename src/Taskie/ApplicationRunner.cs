@@ -2,13 +2,24 @@ using System;
 
 namespace Taskie
 {
-	public class ApplicationRunner : IDisposable
+	public interface IApplicationRunner
+	{
+		void RunWith(string[] arguments);
+	}
+
+	public class ApplicationRunner : IApplicationRunner, IDisposable
 	{
 		private readonly IApplication _application;
 
 		public ApplicationRunner(IApplication application)
 		{
 			_application = application;
+
+			_application.Startup();
+		}
+
+		public void RunWith(string[] arguments)
+		{
 		}
 
 		#region IDisposable
