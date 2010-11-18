@@ -21,7 +21,7 @@ namespace StandardApp.Tasks
 
 			_customerService.Save(invalidCustomers);
 
-			Console.WriteLine("Done processing.");
+			Console.WriteLine("Done processing customers.");
 			Console.ReadLine();
 		}
 	}

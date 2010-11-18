@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using StandardApp.Domain;
 
@@ -13,14 +14,14 @@ namespace StandardApp.Services
 	{
 		public IEnumerable<Customer> GetAllCustomers()
 		{
-			yield return new Customer();
-			yield return new Customer();
-			yield return new Customer();
-			yield return new Customer();
+			Console.WriteLine("Loading customers...");
+
+			return new[] { new Customer() };
 		}
 
 		public void Save(IEnumerable<Customer> customers)
 		{
+			Console.WriteLine("Saving customers...");
 		}
 	}
 }
