@@ -1,21 +1,33 @@
 using System;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Taskie
 {
-	public interface IApplicationRunner
+	public interface IApplicationRunner : IDisposable
 	{
 		void RunWith(string[] arguments);
 	}
 
-	public class ApplicationRunner : IApplicationRunner, IDisposable
+	public class ApplicationRunner : IApplicationRunner
 	{
 		private readonly IApplication _application;
 
-		public ApplicationRunner(IApplication application)
+		public ApplicationRunner()
 		{
-			_application = application;
-
+			_application = getApplicationInstance();
 			_application.Startup();
+		}
+
+		private static IApplication getApplicationInstance()
+		{
+			try
+			{
+				return ServiceLocator.Current.GetInstance<IApplication>();
+			}
+			catch (ActivationException)
+			{
+				return IoC.Resolve<IApplication>();
+			}
 		}
 
 		public void RunWith(string[] arguments)

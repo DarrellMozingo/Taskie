@@ -43,10 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRunner.cs" />
+    <Compile Include="DefaultApplication.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="IoC.cs" />
     <Compile Include="ITask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandardRegistry.cs" />
     <Compile Include="TaskieRunner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

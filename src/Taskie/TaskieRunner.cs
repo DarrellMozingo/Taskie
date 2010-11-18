@@ -9,7 +9,14 @@ namespace Taskie
 		{
 			if (serviceLocatorIsNotSet())
 			{
-				throw new InvalidOperationException("You have to setup the SeriveLocator first with a call to ServiceLocator.SetLocatorProvider().");
+				throw new InvalidOperationException("You have to setup the ServiceLocator first with a call to ServiceLocator.SetLocatorProvider().");
+			}
+
+			IoC.Bootstrap();
+
+			using (var applicationRunner = IoC.Resolve<IApplicationRunner>())
+			{
+				applicationRunner.RunWith(arguments);
 			}
 		}
 
@@ -17,7 +24,7 @@ namespace Taskie
 		{
 			try
 			{
-				return (ServiceLocator.Current != null);
+				return (ServiceLocator.Current == null);
 			}
 			catch (NullReferenceException)
 			{

@@ -1,3 +1,4 @@
+using System;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
@@ -5,23 +6,14 @@ namespace Taskie
 {
 	public class IoC
 	{
-		private static bool _wasBootstrapped;
+		public static Action Bootstrap = () => ObjectFactory.Initialize(y => y.Scan(x =>
+		                                                                            {
+		                                                                            	x.TheCallingAssembly();
+		                                                                            	x.WithDefaultConventions();
+		                                                                            	x.LookForRegistries();
 
-		public static void Bootstrap()
-		{
-			if (_wasBootstrapped)
-			{
-				return;
-			}
-			
-			ObjectFactory.Initialize(y => y.Scan(x =>
-			                                     {
-			                                     	x.TheCallingAssembly();
-			                                     	x.WithDefaultConventions();
-			                                     }));
-
-			_wasBootstrapped = true;
-		}
+		                                                                            	x.ExcludeType<ITask>();
+		                                                                            }));
 
 		public static T Resolve<T>()
 		{
