@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ApplicationRunnerFixture.cs" />
     <Compile Include="IoCFixture.cs" />
+    <Compile Include="NullTaskFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskieRunnerFixture.cs" />
     <Compile Include="TestingHelpers\TestingExtensions.cs" />

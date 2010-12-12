@@ -11,9 +11,12 @@ namespace Taskie
 	public class ApplicationRunner : IApplicationRunner
 	{
 		private readonly IApplication _application;
+		private readonly ICommandLineParser _commandLineParser;
 
-		public ApplicationRunner()
+		public ApplicationRunner(ICommandLineParser commandLineParser)
 		{
+			_commandLineParser = commandLineParser;
+
 			_application = getApplicationInstance();
 			_application.Startup();
 		}
@@ -32,6 +35,9 @@ namespace Taskie
 
 		public void RunWith(string[] arguments)
 		{
+			var taskToRun = _commandLineParser.GetRequestedTask(arguments);
+
+			taskToRun.Run();
 		}
 
 		#region IDisposable

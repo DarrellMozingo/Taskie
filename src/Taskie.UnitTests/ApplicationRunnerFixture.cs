@@ -26,7 +26,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				settingUpApplication = () => new ApplicationRunner();
+				settingUpApplication = () => new ApplicationRunner(null);
 			}
 
 			[Test]
@@ -57,7 +57,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				settingUpApplication = () => new ApplicationRunner();
+				settingUpApplication = () => new ApplicationRunner(null);
 			}
 
 			[Test]
@@ -71,6 +71,8 @@ namespace Taskie.UnitTests
 		public class Having_an_application_instance_available : SpecBase
 		{
 			protected readonly IApplication _fakeApplication = A.Fake<IApplication>();
+			protected readonly ICommandLineParser _fakeCommandLineParser = A.Fake<ICommandLineParser>();
+			protected IApplicationRunner _applicationRunner;
 
 			protected override void infrastructure_setup()
 			{
@@ -78,6 +80,8 @@ namespace Taskie.UnitTests
 				A.CallTo(() => fakeServiceLocator.GetInstance<IApplication>()).Returns(_fakeApplication);
 
 				ServiceLocator.SetLocatorProvider(() => fakeServiceLocator);
+
+				_applicationRunner = new ApplicationRunner(_fakeCommandLineParser);
 			}
 		}
 
@@ -86,13 +90,36 @@ namespace Taskie.UnitTests
 		{
 			protected override void because()
 			{
-				new ApplicationRunner().Dispose();
+				_applicationRunner.Dispose();
 			}
 
 			[Test]
 			public void Should_shut_down_the_application()
 			{
 				A.CallTo(() => _fakeApplication.Shutdown()).MustHaveHappened();
+			}
+		}
+
+		[TestFixture]
+		public class When_being_ran_with_a_valid_task : Having_an_application_instance_available
+		{
+			private readonly string[] _argumentsForValidTask = new[] { "valid_task" };
+			private readonly ITask _fakeTask = A.Fake<ITask>();
+
+			protected override void context()
+			{
+				A.CallTo(() => _fakeCommandLineParser.GetRequestedTask(_argumentsForValidTask)).Returns(_fakeTask);
+			}
+
+			protected override void because()
+			{
+				_applicationRunner.RunWith(_argumentsForValidTask);
+			}
+
+			[Test]
+			public void Should_run_the_task()
+			{
+				A.CallTo(() => _fakeTask.Run()).MustHaveHappened();
 			}
 		}
 	}

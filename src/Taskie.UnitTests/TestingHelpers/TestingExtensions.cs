@@ -35,6 +35,11 @@ namespace Taskie.UnitTests.TestingHelpers
 			Assert.IsInstanceOf(typeof(T), item);
 		}
 
+		public static void ShouldNotThrowAnyExceptions(this Action workToPerform)
+		{
+			workToPerform();
+		}
+
 		public static ExceptionType ShouldThrowAn<ExceptionType>(this Action workToPerform)
 			where ExceptionType : Exception
 		{

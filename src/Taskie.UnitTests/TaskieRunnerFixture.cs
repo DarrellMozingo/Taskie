@@ -11,7 +11,7 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_running_Taskie_without_having_first_setup_the_Service_Locator : SpecBase
 		{
-			Action _runningTaskieWithoutSerivceLocator;
+			private Action _runningTaskieWithoutSerivceLocator;
 
 			protected override void context()
 			{
@@ -35,9 +35,9 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_running_Taskie_with_the_Service_Locator_all_setup : SpecBase
 		{
-			readonly string[] _arguments = new[] { "arg1", "arg2" };
-			readonly IApplicationRunner _fakeApplicationRunner = A.Fake<IApplicationRunner>();
-			bool _wasBootstrapped;
+			private readonly string[] _arguments = new[] { "arg1", "arg2" };
+			private readonly IApplicationRunner _fakeApplicationRunner = A.Fake<IApplicationRunner>();
+			private bool _wasBootstrapped;
 
 			protected override void context()
 			{
@@ -56,7 +56,7 @@ namespace Taskie.UnitTests
 			{
 				_wasBootstrapped.ShouldBeTrue();
 			}
-			
+
 			[Test]
 			public void Should_resolve_the_application_runner_and_pass_off_the_provided_argument_list()
 			{
