@@ -12,13 +12,10 @@ namespace Taskie.UnitTests
 		public class Using_the_task_resolver : SpecBase
 		{
 			protected readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
-			protected ITaskResolver _taskResolver;
 
 			protected override void infrastructure_setup()
 			{
 				ServiceLocator.SetLocatorProvider(() => _fakeServiceLocator);
-
-				_taskResolver = new TaskResolver();
 			}
 		}
 
@@ -34,7 +31,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_resolvedTask = _taskResolver.ResolveTask("bar");
+				_resolvedTask = new TaskResolver().ResolveTask("bar");
 			}
 
 			[Test]
@@ -63,7 +60,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_resolvedTask = _taskResolver.ResolveTask("foo");
+				_resolvedTask = new TaskResolver().ResolveTask("foo");
 			}
 
 			[Test]
@@ -92,7 +89,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_allRunnableTasks = _taskResolver.GetAllRunnableTasks();
+				_allRunnableTasks = new TaskResolver().GetAllRunnableTasks();
 			}
 
 			[Test]
@@ -128,7 +125,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_allRunnableTasks = _taskResolver.GetAllRunnableTasks();
+				_allRunnableTasks = new TaskResolver().GetAllRunnableTasks();
 			}
 
 			[Test]
