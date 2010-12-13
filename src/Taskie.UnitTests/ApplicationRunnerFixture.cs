@@ -26,7 +26,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				settingUpApplication = () => new ApplicationRunner(null);
+				settingUpApplication = () => new ApplicationRunner(null, null);
 			}
 
 			[Test]
@@ -40,14 +40,12 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_constructing_the_main_application_runner_and_an_implementation_of_the_application_is_not_available_from_the_Service_Locator : SpecBase
 		{
+			private readonly IApplication _fakeApplication = A.Fake<IApplication>();
 			private Action settingUpApplication;
 
 			protected override void context()
 			{
-				var fakeApplication = A.Fake<IApplication>();
-				A.CallTo(() => fakeApplication.Startup()).Throws(new Exception("from_internal_container"));
-
-				IoC.Inject(fakeApplication);
+				A.CallTo(() => _fakeApplication.Startup()).Throws(new Exception("from_internal_container"));
 
 				var fakeServiceLocator = A.Fake<IServiceLocator>();
 				A.CallTo(() => fakeServiceLocator.GetInstance<IApplication>()).Throws(new ActivationException());
@@ -57,7 +55,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				settingUpApplication = () => new ApplicationRunner(null);
+				settingUpApplication = () => new ApplicationRunner(null, _fakeApplication);
 			}
 
 			[Test]
@@ -81,7 +79,7 @@ namespace Taskie.UnitTests
 
 				ServiceLocator.SetLocatorProvider(() => fakeServiceLocator);
 
-				_applicationRunner = new ApplicationRunner(_fakeCommandLineParser);
+				_applicationRunner = new ApplicationRunner(_fakeCommandLineParser, null);
 			}
 		}
 

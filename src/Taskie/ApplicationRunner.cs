@@ -13,15 +13,15 @@ namespace Taskie
 		private readonly IApplication _application;
 		private readonly ICommandLineParser _commandLineParser;
 
-		public ApplicationRunner(ICommandLineParser commandLineParser)
+		public ApplicationRunner(ICommandLineParser commandLineParser, IApplication application)
 		{
 			_commandLineParser = commandLineParser;
 
-			_application = getApplicationInstance();
+			_application = getApplicationInstanceFromServiceLocator() ?? application;
 			_application.Startup();
 		}
 
-		private static IApplication getApplicationInstance()
+		private static IApplication getApplicationInstanceFromServiceLocator()
 		{
 			try
 			{
@@ -29,7 +29,7 @@ namespace Taskie
 			}
 			catch (ActivationException)
 			{
-				return IoC.Resolve<IApplication>();
+				return null;
 			}
 		}
 
