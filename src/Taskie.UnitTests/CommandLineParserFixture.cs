@@ -19,14 +19,11 @@ namespace Taskie.UnitTests
 
 			protected override void infrastructure_setup()
 			{
-				A.CallTo(() => _fakeTaskResolver.GetAllRunnableTasks()).Returns(new[]
-				                                                                	{
-				                                                                		new TaskInformation
-				                                                                			{
-				                                                                				Name = _runnableTaskName,
-				                                                                				Description = _runnableTaskDescription
-				                                                                			}
-				                                                                	});
+				A.CallTo(() => _fakeTaskResolver.GetAllRunnableTasks()).ReturnsEnumerableContaining(new TaskInformation
+				                                                                                    	{
+				                                                                                    		Name = _runnableTaskName,
+				                                                                                    		Description = _runnableTaskDescription
+				                                                                                    	});
 
 				_commandLineParser = new CommandLineParser(_fakeScreenIO, _fakeTaskResolver);
 			}

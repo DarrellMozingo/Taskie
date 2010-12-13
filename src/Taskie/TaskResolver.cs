@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Taskie
 {
@@ -10,14 +12,30 @@ namespace Taskie
 
 	public class TaskResolver : ITaskResolver
 	{
+		private readonly IEnumerable<ITask> _allRunnableTasks;
+
+		public TaskResolver()
+		{
+			_allRunnableTasks = ServiceLocator.Current.GetAllInstances<ITask>();
+		}
+
 		public ITask ResolveTask(string friendlyTaskName)
 		{
-			return null;
+			return _allRunnableTasks
+				.Where(task => TaskMetaHelper.GetFriendlyNameFor(task).EqualsIgnoringCase(friendlyTaskName))
+				.SingleOrDefault();
 		}
 
 		public IEnumerable<TaskInformation> GetAllRunnableTasks()
 		{
-			return null;
+			foreach (var task in _allRunnableTasks)
+			{
+				yield return new TaskInformation
+				             	{
+				             		Name = TaskMetaHelper.GetFriendlyNameFor(task),
+				             		Description = TaskMetaHelper.GetDescriptionFor(task)
+				             	};
+			}
 		}
 	}
 }

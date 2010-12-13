@@ -53,8 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenIO.cs" />
     <Compile Include="StandardRegistry.cs" />
+    <Compile Include="TaskDescriptionAttribute.cs" />
     <Compile Include="TaskieRunner.cs" />
     <Compile Include="TaskInformation.cs" />
+    <Compile Include="TaskMetaHelper.cs" />
     <Compile Include="TaskResolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

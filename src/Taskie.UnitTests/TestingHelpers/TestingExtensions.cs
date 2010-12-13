@@ -15,6 +15,11 @@ namespace Taskie.UnitTests.TestingHelpers
 			Assert.AreNotEqual(expected, actual);
 		}
 
+		public static void ShouldBeNull(this object item)
+		{
+			Assert.IsNull(item);
+		}
+
 		public static void ShouldNotBeNull(this object item, string message)
 		{
 			Assert.IsNotNull(item, message);

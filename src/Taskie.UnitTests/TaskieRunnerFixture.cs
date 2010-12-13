@@ -11,7 +11,7 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_running_Taskie_without_having_first_setup_the_Service_Locator : SpecBase
 		{
-			private Action _runningTaskieWithoutSerivceLocator;
+			private Action _runningTaskieWithoutSerivceLocatorBeingSet;
 
 			protected override void context()
 			{
@@ -20,13 +20,13 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_runningTaskieWithoutSerivceLocator = () => TaskieRunner.RunWith(new string[0]);
+				_runningTaskieWithoutSerivceLocatorBeingSet = () => TaskieRunner.RunWith(new string[0]);
 			}
 
 			[Test]
 			public void Should_throw_an_invalid_operation_exception_with_a_message()
 			{
-				_runningTaskieWithoutSerivceLocator
+				_runningTaskieWithoutSerivceLocatorBeingSet
 					.ShouldThrowAn<InvalidOperationException>()
 					.Message.ShouldNotBeBlank();
 			}
