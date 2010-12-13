@@ -5,6 +5,7 @@ using Taskie;
 
 namespace StandardApp.Tasks
 {
+	[TaskDescription("Checks for invalid credit cards.")]
 	public class ProcessCustomersTask : ITask
 	{
 		private readonly ICustomerService _customerService;
