@@ -1,8 +1,8 @@
 using StructureMap.Configuration.DSL;
 
-namespace Taskie
+namespace Taskie.Container
 {
-	public class StandardRegistry : Registry
+	internal class StandardRegistry : Registry
 	{
 		public StandardRegistry()
 		{

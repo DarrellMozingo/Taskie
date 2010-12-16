@@ -1,6 +1,7 @@
 using System;
 using FakeItEasy;
 using NUnit.Framework;
+using Taskie.Container;
 using Taskie.UnitTests.TestingHelpers;
 
 namespace Taskie.UnitTests

@@ -2,9 +2,9 @@ using System;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
-namespace Taskie
+namespace Taskie.Container
 {
-	public class IoC
+	internal class IoC
 	{
 		public static Action Bootstrap = () => ObjectFactory.Initialize(y => y.Scan(x =>
 		                                                                            {
