@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Taskie
 {
-	internal static class HelpfulExtensions
+	public static class HelpfulExtensions
 	{
 		public static string Substitute(this string value, params object[] arguments)
 		{

@@ -34,9 +34,6 @@
     <Reference Include="FakeItEasy">
       <HintPath>..\..\tools\FakeItEasy\FakeItEasy.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\tools\CommonServiceLocator\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\tools\NUnit\nunit.framework.dll</HintPath>
     </Reference>

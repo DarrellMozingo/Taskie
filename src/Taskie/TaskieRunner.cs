@@ -1,34 +1,22 @@
 using System;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Taskie
 {
 	public static class TaskieRunner
 	{
-		public static void RunWith(string[] arguments)
+		public static void RunWith(string[] arguments, IServiceLocator serviceLocator)
 		{
-			if (serviceLocatorIsNotSet())
+			if (serviceLocator == null)
 			{
-				throw new InvalidOperationException("You have to setup the ServiceLocator first with a call to ServiceLocator.SetLocatorProvider().");
+				throw new ArgumentNullException("serviceLocator");
 			}
 
 			IoC.Bootstrap();
+			IoC.Inject(serviceLocator);
 
 			using (var applicationRunner = IoC.Resolve<IApplicationRunner>())
 			{
 				applicationRunner.RunWith(arguments);
-			}
-		}
-
-		private static bool serviceLocatorIsNotSet()
-		{
-			try
-			{
-				return (ServiceLocator.Current == null);
-			}
-			catch (NullReferenceException)
-			{
-				return true;
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Taskie
 {
@@ -14,9 +13,9 @@ namespace Taskie
 	{
 		private readonly IEnumerable<ITask> _allRunnableTasks;
 
-		public TaskResolver()
+		public TaskResolver(IServiceLocator serviceLocator)
 		{
-			_allRunnableTasks = ServiceLocator.Current.GetAllInstances<ITask>();
+			_allRunnableTasks = serviceLocator.GetAllInstances<ITask>();
 		}
 
 		public ITask ResolveTask(string friendlyTaskName)
@@ -28,14 +27,11 @@ namespace Taskie
 
 		public IEnumerable<TaskInformation> GetAllRunnableTasks()
 		{
-			foreach (var task in _allRunnableTasks)
-			{
-				yield return new TaskInformation
-				             	{
-				             		Name = TaskMetaHelper.GetFriendlyNameFor(task),
-				             		Description = TaskMetaHelper.GetDescriptionFor(task)
-				             	};
-			}
+			return _allRunnableTasks.Select(task => new TaskInformation
+			                                        	{
+			                                        		Name = TaskMetaHelper.GetFriendlyNameFor(task),
+			                                        		Description = TaskMetaHelper.GetDescriptionFor(task)
+			                                        	});
 		}
 	}
 }

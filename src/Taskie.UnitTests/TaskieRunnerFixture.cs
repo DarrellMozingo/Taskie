@@ -1,6 +1,5 @@
 using System;
 using FakeItEasy;
-using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Taskie.UnitTests.TestingHelpers;
 
@@ -9,52 +8,52 @@ namespace Taskie.UnitTests
 	public class TaskieRunnerFixture
 	{
 		[TestFixture]
-		public class When_running_Taskie_without_having_first_setup_the_Service_Locator : SpecBase
+		public class When_running_Taskie_without_passing_in_a_service_locator_implementation : SpecBase
 		{
-			private Action _runningTaskieWithoutSerivceLocatorBeingSet;
-
-			protected override void context()
-			{
-				ServiceLocator.SetLocatorProvider(null);
-			}
-
+			private Action _runningTaskieWithoutSerivceLocator;
+			
 			protected override void because()
 			{
-				_runningTaskieWithoutSerivceLocatorBeingSet = () => TaskieRunner.RunWith(new string[0]);
+				_runningTaskieWithoutSerivceLocator = () => TaskieRunner.RunWith(new string[0], null);
 			}
 
 			[Test]
-			public void Should_throw_an_invalid_operation_exception_with_a_message()
+			public void Should_throw_an_argument_null_exception()
 			{
-				_runningTaskieWithoutSerivceLocatorBeingSet
-					.ShouldThrowAn<InvalidOperationException>()
-					.Message.ShouldNotBeBlank();
+				_runningTaskieWithoutSerivceLocator.ShouldThrowAn<ArgumentNullException>();
 			}
 		}
 
 		[TestFixture]
-		public class When_running_Taskie_with_the_Service_Locator_all_setup : SpecBase
+		public class When_running_Taskie_with_a_valid_service_locator_implementation : SpecBase
 		{
 			private readonly string[] _arguments = new[] { "arg1", "arg2" };
+			private readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private readonly IApplicationRunner _fakeApplicationRunner = A.Fake<IApplicationRunner>();
 			private bool _wasBootstrapped;
 
 			protected override void context()
 			{
-				ServiceLocator.SetLocatorProvider(A.Fake<IServiceLocator>);
 				IoC.Bootstrap = () => _wasBootstrapped = true;
 				IoC.Inject(_fakeApplicationRunner);
 			}
 
 			protected override void because()
 			{
-				TaskieRunner.RunWith(_arguments);
+				TaskieRunner.RunWith(_arguments, _fakeServiceLocator);
 			}
 
 			[Test]
 			public void Should_boot_strap_IoC_container()
 			{
 				_wasBootstrapped.ShouldBeTrue();
+			}
+
+			[Test]
+			public void Should_inject_the_service_locator_into_the_IoC_container_for_future_use()
+			{
+				Action gettingServiceLocatorInstance = () => IoC.Resolve<IServiceLocator>();
+				gettingServiceLocatorInstance.ShouldNotThrowAnyExceptions();
 			}
 
 			[Test]

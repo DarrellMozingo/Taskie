@@ -20,6 +20,11 @@ namespace Taskie.UnitTests.TestingHelpers
 			Assert.IsNull(item);
 		}
 
+		public static void ShouldNotBeNull(this object item)
+		{
+			Assert.IsNotNull(item, null);
+		}
+
 		public static void ShouldNotBeNull(this object item, string message)
 		{
 			Assert.IsNotNull(item, message);
@@ -50,7 +55,7 @@ namespace Taskie.UnitTests.TestingHelpers
 		{
 			var resultingException = getExceptionFromPerforming(workToPerform);
 
-			resultingException.ShouldNotBeNull("No exception was thrown, but expected one to be.");
+			resultingException.ShouldNotBeNull("No exception was thrown, but we expected one to be.");
 			resultingException.ShouldBeAnInstanceOf<ExceptionType>();
 
 			return (ExceptionType)resultingException;

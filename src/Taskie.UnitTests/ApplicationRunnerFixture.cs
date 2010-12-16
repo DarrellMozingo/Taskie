@@ -2,15 +2,15 @@ using System;
 using FakeItEasy;
 using NUnit.Framework;
 using Taskie.UnitTests.TestingHelpers;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Taskie.UnitTests
 {
 	public class ApplicationRunnerFixture
 	{
 		[TestFixture]
-		public class When_constructing_the_main_application_runner_and_an_implementation_of_the_application_is_available_from_the_Service_Locator : SpecBase
+		public class When_constructing_the_main_application_runner_and_an_implementation_of_the_application_is_available_from_the_provided_service_locator_implemenation : SpecBase
 		{
+			private readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private Action settingUpApplication;
 
 			protected override void context()
@@ -18,19 +18,16 @@ namespace Taskie.UnitTests
 				var fakeApplication = A.Fake<IApplication>();
 				A.CallTo(() => fakeApplication.Startup()).Throws(new Exception("from_service_locator"));
 
-				var fakeServiceLocator = A.Fake<IServiceLocator>();
-				A.CallTo(() => fakeServiceLocator.GetInstance<IApplication>()).Returns(fakeApplication);
-
-				ServiceLocator.SetLocatorProvider(() => fakeServiceLocator);
+				A.CallTo(() => _fakeServiceLocator.GetInstance<IApplication>()).Returns(fakeApplication);
 			}
 
 			protected override void because()
 			{
-				settingUpApplication = () => new ApplicationRunner(null, null);
+				settingUpApplication = () => new ApplicationRunner(null, _fakeServiceLocator, null);
 			}
 
 			[Test]
-			public void Should_use_the_application_implementation_from_the_Service_Locator()
+			public void Should_use_the_application_implementation_from_the_service_locator_implementation()
 			{
 				settingUpApplication.ShouldThrowAn<Exception>()
 					.Message.ShouldEqual("from_service_locator");
@@ -40,22 +37,19 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_constructing_the_main_application_runner_and_an_implementation_of_the_application_is_not_available_from_the_Service_Locator : SpecBase
 		{
+			private readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private readonly IApplication _fakeApplication = A.Fake<IApplication>();
 			private Action settingUpApplication;
 
 			protected override void context()
 			{
 				A.CallTo(() => _fakeApplication.Startup()).Throws(new Exception("from_internal_container"));
-
-				var fakeServiceLocator = A.Fake<IServiceLocator>();
-				A.CallTo(() => fakeServiceLocator.GetInstance<IApplication>()).Throws(new ActivationException());
-
-				ServiceLocator.SetLocatorProvider(() => fakeServiceLocator);
+				A.CallTo(() => _fakeServiceLocator.GetInstance<IApplication>()).Returns(null);
 			}
 
 			protected override void because()
 			{
-				settingUpApplication = () => new ApplicationRunner(null, _fakeApplication);
+				settingUpApplication = () => new ApplicationRunner(null, _fakeServiceLocator, _fakeApplication);
 			}
 
 			[Test]
@@ -68,18 +62,16 @@ namespace Taskie.UnitTests
 
 		public class Having_an_application_instance_available : SpecBase
 		{
+			protected readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			protected readonly IApplication _fakeApplication = A.Fake<IApplication>();
 			protected readonly ICommandLineParser _fakeCommandLineParser = A.Fake<ICommandLineParser>();
 			protected IApplicationRunner _applicationRunner;
 
 			protected override void infrastructure_setup()
 			{
-				var fakeServiceLocator = A.Fake<IServiceLocator>();
-				A.CallTo(() => fakeServiceLocator.GetInstance<IApplication>()).Returns(_fakeApplication);
+				A.CallTo(() => _fakeServiceLocator.GetInstance<IApplication>()).Returns(null);
 
-				ServiceLocator.SetLocatorProvider(() => fakeServiceLocator);
-
-				_applicationRunner = new ApplicationRunner(_fakeCommandLineParser, null);
+				_applicationRunner = new ApplicationRunner(_fakeCommandLineParser, _fakeServiceLocator, _fakeApplication);
 			}
 		}
 

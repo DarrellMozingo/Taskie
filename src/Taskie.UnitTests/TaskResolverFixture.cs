@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
-using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Taskie.UnitTests.TestingHelpers;
 
@@ -9,19 +8,10 @@ namespace Taskie.UnitTests
 {
 	public class TaskResolverFixture
 	{
-		public class Using_the_task_resolver : SpecBase
-		{
-			protected readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
-
-			protected override void infrastructure_setup()
-			{
-				ServiceLocator.SetLocatorProvider(() => _fakeServiceLocator);
-			}
-		}
-
 		[TestFixture]
-		public class When_resolving_a_task_using_the_friendly_name_and_there_is_no_match : Using_the_task_resolver
+		public class When_resolving_a_task_using_the_friendly_name_and_there_is_no_match : SpecBase
 		{
+			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private ITask _resolvedTask;
 
 			protected override void context()
@@ -31,7 +21,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_resolvedTask = new TaskResolver().ResolveTask("bar");
+				_resolvedTask = new TaskResolver(_fakeServiceLocator).ResolveTask("bar");
 			}
 
 			[Test]
@@ -49,8 +39,9 @@ namespace Taskie.UnitTests
 		}
 
 		[TestFixture]
-		public class When_resolving_a_task_using_the_friendly_name_and_there_is_a_match : Using_the_task_resolver
+		public class When_resolving_a_task_using_the_friendly_name_and_there_is_a_match : SpecBase
 		{
+			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private ITask _resolvedTask;
 
 			protected override void context()
@@ -60,7 +51,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_resolvedTask = new TaskResolver().ResolveTask("foo");
+				_resolvedTask = new TaskResolver(_fakeServiceLocator).ResolveTask("foo");
 			}
 
 			[Test]
@@ -78,8 +69,9 @@ namespace Taskie.UnitTests
 		}
 
 		[TestFixture]
-		public class When_getting_all_runnable_tasks_and_the_only_task_has_a_description : Using_the_task_resolver
+		public class When_getting_all_runnable_tasks_and_the_only_task_has_a_description : SpecBase
 		{
+			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private IEnumerable<TaskInformation> _allRunnableTasks;
 
 			protected override void context()
@@ -89,7 +81,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_allRunnableTasks = new TaskResolver().GetAllRunnableTasks();
+				_allRunnableTasks = new TaskResolver(_fakeServiceLocator).GetAllRunnableTasks();
 			}
 
 			[Test]
@@ -114,8 +106,9 @@ namespace Taskie.UnitTests
 		}
 
 		[TestFixture]
-		public class When_getting_all_runnable_tasks_and_the_only_task_does_not_have_a_description : Using_the_task_resolver
+		public class When_getting_all_runnable_tasks_and_the_only_task_does_not_have_a_description : SpecBase
 		{
+			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private IEnumerable<TaskInformation> _allRunnableTasks;
 
 			protected override void context()
@@ -125,7 +118,7 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				_allRunnableTasks = new TaskResolver().GetAllRunnableTasks();
+				_allRunnableTasks = new TaskResolver(_fakeServiceLocator).GetAllRunnableTasks();
 			}
 
 			[Test]

@@ -1,5 +1,4 @@
 using System;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Taskie
 {
@@ -13,24 +12,12 @@ namespace Taskie
 		private readonly IApplication _application;
 		private readonly ICommandLineParser _commandLineParser;
 
-		public ApplicationRunner(ICommandLineParser commandLineParser, IApplication application)
+		public ApplicationRunner(ICommandLineParser commandLineParser, IServiceLocator serviceLocator, IApplication application)
 		{
 			_commandLineParser = commandLineParser;
 
-			_application = getApplicationInstanceFromServiceLocator() ?? application;
+			_application = serviceLocator.GetInstance<IApplication>() ?? application;
 			_application.Startup();
-		}
-
-		private static IApplication getApplicationInstanceFromServiceLocator()
-		{
-			try
-			{
-				return ServiceLocator.Current.GetInstance<IApplication>();
-			}
-			catch (ActivationException)
-			{
-				return null;
-			}
 		}
 
 		public void RunWith(string[] arguments)

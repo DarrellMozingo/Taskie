@@ -1,3 +1,4 @@
+using FakeItEasy;
 using NUnit.Framework;
 using StructureMap;
 using Taskie.UnitTests.TestingHelpers;
@@ -10,6 +11,7 @@ namespace Taskie.UnitTests
 		protected override void because()
 		{
 			IoC.Bootstrap();
+			IoC.Inject(A.Fake<IServiceLocator>());	// Normally provided by the calling app.
 		}
 
 		[Test]
