@@ -1,4 +1,5 @@
-﻿using Taskie;
+﻿using StandardApp.Container;
+using Taskie;
 
 namespace StandardApp.ConsoleRunner
 {
@@ -7,7 +8,9 @@ namespace StandardApp.ConsoleRunner
 		public static void Main(string[] args)
 		{
 			IoC.Bootstrap();
-			TaskieRunner.RunWith(args);
+			var serviceLocator = IoC.Resolve<IServiceLocator>();
+
+			TaskieRunner.RunWith(args, serviceLocator);
 		}
 	}
 }

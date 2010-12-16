@@ -3,11 +3,11 @@ using Taskie;
 
 namespace StandardApp
 {
-	public class Application : IApplication
+	public class TaskieApplication : IApplication
 	{
 		private readonly ISessionBuilder _sessionBuilder;
 
-		public Application(ISessionBuilder sessionBuilder)
+		public TaskieApplication(ISessionBuilder sessionBuilder)
 		{
 			_sessionBuilder = sessionBuilder;
 		}

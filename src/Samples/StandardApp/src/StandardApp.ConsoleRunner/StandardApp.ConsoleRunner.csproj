@@ -40,8 +40,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="Taskie">
       <HintPath>..\..\tools\Taskie\Taskie.dll</HintPath>
     </Reference>
