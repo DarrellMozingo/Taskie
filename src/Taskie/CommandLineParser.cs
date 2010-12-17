@@ -36,9 +36,10 @@ namespace Taskie
 			if (cantFindTaskToRun)
 			{
 				printUnknownTaskErrorInformation(friendlyTaskNameToRun);
+				return new NullTask();
 			}
 
-			return task ?? new NullTask();
+			return task;
 		}
 
 		private void printUnknownTaskErrorInformation(string friendlyTaskNameToRun)

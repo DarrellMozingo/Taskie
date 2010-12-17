@@ -7,7 +7,7 @@ namespace Taskie
 
 		public static string GetFriendlyNameFor(ITask task)
 		{
-			return task.GetType().Name.TrimEnd(_taskSuffix); ;
+			return task.GetType().Name.TrimEnd(_taskSuffix);
 		}
 
 		public static string GetFullNameFrom(string friendlyTaskName)
