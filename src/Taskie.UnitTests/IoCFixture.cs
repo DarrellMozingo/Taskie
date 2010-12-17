@@ -1,4 +1,3 @@
-using FakeItEasy;
 using NUnit.Framework;
 using StructureMap;
 using Taskie.Container;
@@ -7,18 +6,19 @@ using Taskie.UnitTests.TestingHelpers;
 namespace Taskie.UnitTests
 {
 	[TestFixture]
-	public class When_boot_strapping_the_IoC_container : SpecBase
+	public class When_creating_the_IoC_container : SpecBase
 	{
+		private IContainer _container;
+
 		protected override void because()
 		{
-			IoC.Bootstrap();
-			IoC.Inject(A.Fake<IServiceLocator>());	// Normally provided by the calling app.
+			_container = IoC.CreateContainer();
 		}
 
 		[Test]
 		public void Should_build_a_valid_container_configuration()
 		{
-			ObjectFactory.AssertConfigurationIsValid();
+			_container.AssertConfigurationIsValid();
 		}
 	}
 }

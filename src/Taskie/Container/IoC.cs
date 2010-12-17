@@ -6,23 +6,17 @@ namespace Taskie.Container
 {
 	internal class IoC
 	{
-		public static Action Bootstrap = () => ObjectFactory.Initialize(y => y.Scan(x =>
-		                                                                            {
-		                                                                            	x.TheCallingAssembly();
-		                                                                            	x.WithDefaultConventions();
-		                                                                            	x.LookForRegistries();
+		public static Func<IContainer> CreateContainer = () => new StructureMap.Container(y =>
+		                                                                                  {
+		                                                                                  	y.Scan(x =>
+		                                                                                  	       {
+		                                                                                  	       	x.TheCallingAssembly();
+		                                                                                  	       	x.WithDefaultConventions();
 
-		                                                                            	x.ExcludeType<ITask>();
-		                                                                            }));
+		                                                                                  	       	x.ExcludeType<ITask>();
+		                                                                                  	       });
 
-		public static T Resolve<T>()
-		{
-			return ObjectFactory.GetInstance<T>();
-		}
-
-		public static void Inject<T>(T instance)
-		{
-			ObjectFactory.Inject(instance);
-		}
+		                                                                                  	y.AddRegistry<StandardRegistry>();
+		                                                                                  });
 	}
 }

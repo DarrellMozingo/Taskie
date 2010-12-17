@@ -12,10 +12,10 @@ namespace Taskie
 				throw new ArgumentNullException("serviceLocator");
 			}
 
-			IoC.Bootstrap();
-			IoC.Inject(serviceLocator);
+			var container = IoC.CreateContainer();
+			container.Inject(serviceLocator);
 
-			using (var applicationRunner = IoC.Resolve<IApplicationRunner>())
+			using (var applicationRunner = container.GetInstance<IApplicationRunner>())
 			{
 				applicationRunner.RunWith(arguments);
 			}

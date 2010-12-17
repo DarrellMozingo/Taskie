@@ -16,8 +16,20 @@ namespace Taskie
 		{
 			_commandLineParser = commandLineParser;
 
-			_application = serviceLocator.GetInstance<IApplication>() ?? application;
+			_application = getInstanceFromServiceLocator(serviceLocator) ?? application;
 			_application.Startup();
+		}
+
+		private static IApplication getInstanceFromServiceLocator(IServiceLocator serviceLocator)
+		{
+			try
+			{
+				return serviceLocator.GetInstance<IApplication>();
+			}
+			catch (Exception)
+			{
+				return null;
+			}
 		}
 
 		public void RunWith(string[] arguments)

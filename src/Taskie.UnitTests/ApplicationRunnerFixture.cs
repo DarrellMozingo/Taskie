@@ -35,7 +35,33 @@ namespace Taskie.UnitTests
 		}
 
 		[TestFixture]
-		public class When_constructing_the_main_application_runner_and_an_implementation_of_the_application_is_not_available_from_the_Service_Locator : SpecBase
+		public class When_constructing_the_main_application_runner_and_an_implementation_of_the_application_is_not_available_from_the_Service_Locator_because_it_threw_an_exception : SpecBase
+		{
+			private readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
+			private readonly IApplication _fakeApplication = A.Fake<IApplication>();
+			private Action settingUpApplication;
+
+			protected override void context()
+			{
+				A.CallTo(() => _fakeApplication.Startup()).Throws(new Exception("from_internal_container"));
+				A.CallTo(() => _fakeServiceLocator.GetInstance<IApplication>()).Throws(new Exception());
+			}
+
+			protected override void because()
+			{
+				settingUpApplication = () => new ApplicationRunner(null, _fakeServiceLocator, _fakeApplication);
+			}
+
+			[Test]
+			public void Should_use_the_default_application_implementation_from_the_internal_container()
+			{
+				settingUpApplication.ShouldThrowAn<Exception>()
+					.Message.ShouldEqual("from_internal_container");
+			}
+		}
+
+		[TestFixture]
+		public class When_constructing_the_main_application_runner_and_an_implementation_of_the_application_is_not_available_from_the_Service_Locator_because_it_returned_null : SpecBase
 		{
 			private readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private readonly IApplication _fakeApplication = A.Fake<IApplication>();

@@ -1,6 +1,7 @@
 using System;
 using FakeItEasy;
 using NUnit.Framework;
+using StructureMap;
 using Taskie.Container;
 using Taskie.UnitTests.TestingHelpers;
 
@@ -29,14 +30,15 @@ namespace Taskie.UnitTests
 		public class When_running_Taskie_with_a_valid_service_locator_implementation : SpecBase
 		{
 			private readonly string[] _arguments = new[] { "arg1", "arg2" };
+			private readonly IContainer _fakeContainer = A.Fake<IContainer>();
 			private readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
 			private readonly IApplicationRunner _fakeApplicationRunner = A.Fake<IApplicationRunner>();
-			private bool _wasBootstrapped;
 
 			protected override void context()
 			{
-				IoC.Bootstrap = () => _wasBootstrapped = true;
-				IoC.Inject(_fakeApplicationRunner);
+				IoC.CreateContainer = () => _fakeContainer;
+
+				A.CallTo(() => _fakeContainer.GetInstance<IApplicationRunner>()).Returns(_fakeApplicationRunner);
 			}
 
 			protected override void because()
@@ -45,16 +47,9 @@ namespace Taskie.UnitTests
 			}
 
 			[Test]
-			public void Should_boot_strap_IoC_container()
-			{
-				_wasBootstrapped.ShouldBeTrue();
-			}
-
-			[Test]
 			public void Should_inject_the_service_locator_into_the_IoC_container_for_future_use()
 			{
-				Action gettingServiceLocatorInstance = () => IoC.Resolve<IServiceLocator>();
-				gettingServiceLocatorInstance.ShouldNotThrowAnyExceptions();
+				A.CallTo(() => _fakeContainer.Inject(_fakeServiceLocator)).MustHaveHappened();
 			}
 
 			[Test]
