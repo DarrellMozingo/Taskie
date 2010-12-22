@@ -12,6 +12,7 @@ properties { # Directories
 	$base_dir = $executing_directory.Parent.FullName
 
 	$source_dir = "$base_dir\src"
+	$sample_dir = "$source_dir\Samples"
 
 	$build_dir = "$base_dir\build"
 	$tools_dir = "$base_dir\tools"
@@ -31,7 +32,8 @@ properties { # Executables
 }
 
 properties { # Files
-	$solution_file = "$source_dir\$solution_name.sln"
+	$main_solution_file = "$source_dir\$solution_name.sln"
+	$sample_solution_file = "$sample_dir\StandardApp\src\StandardApp.sln"
 
 	$output_unitTests_dll = "$build_output_dir\$solution_name.UnitTests.dll"
 	$output_unitTests_xml = "$build_reports_dir\UnitTestResults.xml"
@@ -50,7 +52,8 @@ task clean {
 
 task compile -depends clean {
 	echo "Building in $configuration mode."
-	exec { msbuild $solution_file /p:Configuration=$configuration /p:OutDir=""$build_output_dir\\"" /consoleloggerparameters:ErrorsOnly }
+	exec { msbuild $main_solution_file /p:Configuration=$configuration /p:OutDir=""$build_output_dir\\"" /consoleloggerparameters:ErrorsOnly }
+	exec { msbuild $sample_solution_file /p:Configuration=$configuration /consoleloggerparameters:ErrorsOnly }
 }
 
 task unit_tests -depends compile {
