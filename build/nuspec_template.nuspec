@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>taskie</id>
+    <version></version>
+    <authors>Darrell Mozingo</authors>
+    <description>Taskie provides an easy way to create and manage scheduled tasks.</description>
+    <language>en-US</language>
+  </metadata>
+</package>

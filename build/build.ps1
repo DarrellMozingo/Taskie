@@ -43,6 +43,9 @@ properties { # Files
 	$output_unitTests_dll = "$build_output_dir\$solution_name.UnitTests.dll"
 	$output_unitTests_xml = "$build_reports_dir\UnitTestResults.xml"
 
+	$nuspec_template = "$build_dir\nuspec_template.nuspec"
+	$nuspec_file = "$build_output_nuget\taskie.nuspec"
+
 	$required_assemblies = @("$build_output_dir\$solution_name.dll",
 							 "$build_output_dir\StructureMap.dll")
 }
@@ -72,15 +75,16 @@ task unit_tests -depends compile {
 
 task create_deployment -depends set_to_release_mode, unit_tests {
 	$required_assemblies | ForEach { copy_file $_ $build_output_assemblies }
+
+	create_nuget_package
 }
 
-#<?xml version="1.0" encoding="utf-8"?>
-#<package>
-#  <metadata>
-#    <id>taskie</id>
-#    <version>$version</version>
-#    <authors>Darrell Mozingo</authors>
-#    <description>Taskie provides an easy way to create and manage scheduled tasks.</description>
-#    <language>en-US</language>
-#  </metadata> 
-#</package>
+function create_nuget_package {
+	$required_assemblies | ForEach { copy_file $_ $build_output_nuget }
+	
+	$nuspec = [xml](Get-Content $nuspec_template)
+	$nuspec.get_DocumentElement().metadata.version = "1.0"
+	$nuspec.Save($nuspec_file)
+
+	exec { & $tools_nuget pack $nuspec_file -o $build_output_nuget }
+}
