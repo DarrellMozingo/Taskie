@@ -5,6 +5,10 @@
     <version></version>
     <authors>Darrell Mozingo</authors>
     <description>Taskie provides an easy way to create and manage scheduled tasks.</description>
+	<projectUrl>https://github.com/DarrellMozingo/Taskie</projectUrl>
     <language>en-US</language>
   </metadata>
+  <files>
+	<file src="Taskie.dll" target="lib" />
+  </files>
 </package>
