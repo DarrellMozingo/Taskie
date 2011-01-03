@@ -52,7 +52,7 @@ namespace Taskie
 			var runnableTasks = _taskResolver.GetAllRunnableTasks();
 
 			_screenIO.WriteLine("");
-			_screenIO.WriteLine("Taskie - Scheduled Tasks");
+			_screenIO.WriteLine("Taskie - Scheduled Task Manager");
 			_screenIO.WriteLine("");
 			_screenIO.WriteLine("Usage:");
 			_screenIO.WriteLine("   {0} <task_name> - Runs the specified task, which can only be one of the following:".Substitute(RunCommand));
