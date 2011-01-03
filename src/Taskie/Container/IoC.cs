@@ -10,7 +10,7 @@ namespace Taskie.Container
 		                                                                                  {
 		                                                                                  	y.Scan(x =>
 		                                                                                  	       {
-		                                                                                  	       	x.TheCallingAssembly();
+		                                                                                  	       	x.AssemblyContainingType<IoC>();
 		                                                                                  	       	x.WithDefaultConventions();
 
 		                                                                                  	       	x.ExcludeType<ITask>();

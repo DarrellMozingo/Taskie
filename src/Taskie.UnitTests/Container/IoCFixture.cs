@@ -3,7 +3,7 @@ using StructureMap;
 using Taskie.Container;
 using Taskie.UnitTests.TestingHelpers;
 
-namespace Taskie.UnitTests
+namespace Taskie.UnitTests.Container
 {
 	[TestFixture]
 	public class When_creating_the_IoC_container : SpecBase
