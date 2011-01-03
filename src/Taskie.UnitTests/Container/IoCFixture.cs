@@ -1,3 +1,4 @@
+using FakeItEasy;
 using NUnit.Framework;
 using StructureMap;
 using Taskie.Container;
@@ -13,6 +14,7 @@ namespace Taskie.UnitTests.Container
 		protected override void because()
 		{
 			_container = IoC.CreateContainer();
+			_container.Inject(A.Fake<IServiceLocator>());
 		}
 
 		[Test]
