@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
-    <id>taskie</id>
+    <id>Taskie</id>
     <version></version>
     <authors>Darrell Mozingo</authors>
     <description>Taskie provides an easy way to create and manage scheduled tasks.</description>
 	<projectUrl>https://github.com/DarrellMozingo/Taskie</projectUrl>
+	<licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
     <language>en-US</language>
   </metadata>
   <files>
