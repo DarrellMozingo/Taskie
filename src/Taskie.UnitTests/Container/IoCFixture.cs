@@ -14,7 +14,7 @@ namespace Taskie.UnitTests.Container
 		protected override void because()
 		{
 			_container = IoC.CreateContainer();
-			_container.Inject(A.Fake<IServiceLocator>());
+			_container.Inject(A.Fake<ITaskieServiceLocator>());
 		}
 
 		[Test]

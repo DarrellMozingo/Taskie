@@ -41,11 +41,11 @@
   <ItemGroup>
     <Compile Include="ApplicationRunner.cs" />
     <Compile Include="CommandLineParser.cs" />
-    <Compile Include="DefaultApplication.cs" />
+    <Compile Include="DefaultTaskieApplication.cs" />
     <Compile Include="HelpfulExtensions.cs" />
-    <Compile Include="IApplication.cs" />
+    <Compile Include="ITaskieApplication.cs" />
     <Compile Include="Container\IoC.cs" />
-    <Compile Include="IServiceLocator.cs" />
+    <Compile Include="ITaskieServiceLocator.cs" />
     <Compile Include="ITask.cs" />
     <Compile Include="NullTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

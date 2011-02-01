@@ -11,17 +11,17 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_resolving_a_task_using_the_friendly_name_and_there_is_no_match : SpecBase
 		{
-			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
+			private ITaskieServiceLocator _fakeTaskieServiceLocator = A.Fake<ITaskieServiceLocator>();
 			private ITask _resolvedTask;
 
 			protected override void context()
 			{
-				A.CallTo(() => _fakeServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new FooTask());
+				A.CallTo(() => _fakeTaskieServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new FooTask());
 			}
 
 			protected override void because()
 			{
-				_resolvedTask = new TaskResolver(_fakeServiceLocator).ResolveTask("bar");
+				_resolvedTask = new TaskResolver(_fakeTaskieServiceLocator).ResolveTask("bar");
 			}
 
 			[Test]
@@ -41,17 +41,17 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_resolving_a_task_using_the_friendly_name_and_there_is_a_match : SpecBase
 		{
-			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
+			private ITaskieServiceLocator _fakeTaskieServiceLocator = A.Fake<ITaskieServiceLocator>();
 			private ITask _resolvedTask;
 
 			protected override void context()
 			{
-				A.CallTo(() => _fakeServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new FooTask());
+				A.CallTo(() => _fakeTaskieServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new FooTask());
 			}
 
 			protected override void because()
 			{
-				_resolvedTask = new TaskResolver(_fakeServiceLocator).ResolveTask("foo");
+				_resolvedTask = new TaskResolver(_fakeTaskieServiceLocator).ResolveTask("foo");
 			}
 
 			[Test]
@@ -71,17 +71,17 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_getting_all_runnable_tasks_and_the_only_task_has_a_description : SpecBase
 		{
-			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
+			private ITaskieServiceLocator _fakeTaskieServiceLocator = A.Fake<ITaskieServiceLocator>();
 			private IEnumerable<TaskInformation> _allRunnableTasks;
 
 			protected override void context()
 			{
-				A.CallTo(() => _fakeServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new TaskWithDescriptionTask());
+				A.CallTo(() => _fakeTaskieServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new TaskWithDescriptionTask());
 			}
 
 			protected override void because()
 			{
-				_allRunnableTasks = new TaskResolver(_fakeServiceLocator).GetAllRunnableTasks();
+				_allRunnableTasks = new TaskResolver(_fakeTaskieServiceLocator).GetAllRunnableTasks();
 			}
 
 			[Test]
@@ -108,17 +108,17 @@ namespace Taskie.UnitTests
 		[TestFixture]
 		public class When_getting_all_runnable_tasks_and_the_only_task_does_not_have_a_description : SpecBase
 		{
-			private IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
+			private ITaskieServiceLocator _fakeTaskieServiceLocator = A.Fake<ITaskieServiceLocator>();
 			private IEnumerable<TaskInformation> _allRunnableTasks;
 
 			protected override void context()
 			{
-				A.CallTo(() => _fakeServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new TaskWithoutDescriptionTask());
+				A.CallTo(() => _fakeTaskieServiceLocator.GetAllInstances<ITask>()).ReturnsEnumerableContaining(new TaskWithoutDescriptionTask());
 			}
 
 			protected override void because()
 			{
-				_allRunnableTasks = new TaskResolver(_fakeServiceLocator).GetAllRunnableTasks();
+				_allRunnableTasks = new TaskResolver(_fakeTaskieServiceLocator).GetAllRunnableTasks();
 			}
 
 			[Test]

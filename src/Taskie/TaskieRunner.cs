@@ -5,15 +5,15 @@ namespace Taskie
 {
 	public static class TaskieRunner
 	{
-		public static void RunWith(string[] arguments, IServiceLocator serviceLocator)
+		public static void RunWith(string[] arguments, ITaskieServiceLocator taskieServiceLocator)
 		{
-			if (serviceLocator == null)
+			if (taskieServiceLocator == null)
 			{
-				throw new ArgumentNullException("serviceLocator");
+				throw new ArgumentNullException("taskieServiceLocator");
 			}
 
 			var container = IoC.CreateContainer();
-			container.Inject(serviceLocator);
+			container.Inject(taskieServiceLocator);
 
 			using (var applicationRunner = container.GetInstance<IApplicationRunner>())
 			{

@@ -12,9 +12,9 @@ namespace StandardApp.Container
 		{
 			Bind<ICustomerService>().To<CustomerService>();
 			Bind<ISessionBuilder>().To<SessionBuilder>();
-			Bind<IApplication>().To<TaskieApplication>();
+			Bind<ITaskieApplication>().To<TaskieApplication>();
 			Bind<ITask>().To<ProcessCustomersTask>();
-			Bind<IServiceLocator>().To<ServiceLocator>();
+			Bind<ITaskieServiceLocator>().To<TaskieServiceLocator>();
 		}
 	}
 }

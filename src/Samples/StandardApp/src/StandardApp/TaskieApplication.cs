@@ -3,7 +3,7 @@ using Taskie;
 
 namespace StandardApp
 {
-	public class TaskieApplication : IApplication
+	public class TaskieApplication : ITaskieApplication
 	{
 		private readonly ISessionBuilder _sessionBuilder;
 

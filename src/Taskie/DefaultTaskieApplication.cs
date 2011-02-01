@@ -1,6 +1,6 @@
 namespace Taskie
 {
-	public class DefaultApplication : IApplication
+	public class DefaultTaskieApplication : ITaskieApplication
 	{
 		public void Startup()
 		{

@@ -4,7 +4,7 @@ using Taskie;
 
 namespace StandardApp.Container
 {
-	public class ServiceLocator : IServiceLocator
+	public class TaskieServiceLocator : ITaskieServiceLocator
 	{
 		public INSTANCE GetInstance<INSTANCE>()
 		{

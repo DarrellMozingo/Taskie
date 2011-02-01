@@ -9,22 +9,22 @@ namespace Taskie
 
 	public class ApplicationRunner : IApplicationRunner
 	{
-		private readonly IApplication _application;
+		private readonly ITaskieApplication _taskieApplication;
 		private readonly ICommandLineParser _commandLineParser;
 
-		public ApplicationRunner(ICommandLineParser commandLineParser, IServiceLocator serviceLocator, IApplication application)
+		public ApplicationRunner(ICommandLineParser commandLineParser, ITaskieServiceLocator taskieServiceLocator, ITaskieApplication taskieApplication)
 		{
 			_commandLineParser = commandLineParser;
 
-			_application = getInstanceFromServiceLocator(serviceLocator) ?? application;
-			_application.Startup();
+			_taskieApplication = getInstanceFromServiceLocator(taskieServiceLocator) ?? taskieApplication;
+			_taskieApplication.Startup();
 		}
 
-		private static IApplication getInstanceFromServiceLocator(IServiceLocator serviceLocator)
+		private static ITaskieApplication getInstanceFromServiceLocator(ITaskieServiceLocator taskieServiceLocator)
 		{
 			try
 			{
-				return serviceLocator.GetInstance<IApplication>();
+				return taskieServiceLocator.GetInstance<ITaskieApplication>();
 			}
 			catch (Exception)
 			{
@@ -59,7 +59,7 @@ namespace Taskie
 			{
 				if (disposing)
 				{
-					_application.Shutdown();
+					_taskieApplication.Shutdown();
 				}
 			}
 

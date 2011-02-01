@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TaskieApplication.cs" />
-    <Compile Include="Container\ServiceLocator.cs" />
+    <Compile Include="Container\TaskieServiceLocator.cs" />
     <Compile Include="Data\SessionBuilder.cs" />
     <Compile Include="Domain\Customer.cs" />
     <Compile Include="Container\IoC.cs" />

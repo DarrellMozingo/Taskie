@@ -31,7 +31,7 @@ namespace Taskie.UnitTests
 		{
 			private readonly string[] _arguments = new[] { "arg1", "arg2" };
 			private readonly IContainer _fakeContainer = A.Fake<IContainer>();
-			private readonly IServiceLocator _fakeServiceLocator = A.Fake<IServiceLocator>();
+			private readonly ITaskieServiceLocator _fakeTaskieServiceLocator = A.Fake<ITaskieServiceLocator>();
 			private readonly IApplicationRunner _fakeApplicationRunner = A.Fake<IApplicationRunner>();
 
 			protected override void context()
@@ -43,13 +43,13 @@ namespace Taskie.UnitTests
 
 			protected override void because()
 			{
-				TaskieRunner.RunWith(_arguments, _fakeServiceLocator);
+				TaskieRunner.RunWith(_arguments, _fakeTaskieServiceLocator);
 			}
 
 			[Test]
 			public void Should_inject_the_service_locator_into_the_IoC_container_for_future_use()
 			{
-				A.CallTo(() => _fakeContainer.Inject(_fakeServiceLocator)).MustHaveHappened();
+				A.CallTo(() => _fakeContainer.Inject(_fakeTaskieServiceLocator)).MustHaveHappened();
 			}
 
 			[Test]

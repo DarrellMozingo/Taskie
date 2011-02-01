@@ -8,7 +8,7 @@ namespace StandardApp.ConsoleRunner
 		public static void Main(string[] args)
 		{
 			IoC.Bootstrap();
-			var serviceLocator = IoC.Resolve<IServiceLocator>();
+			var serviceLocator = IoC.Resolve<ITaskieServiceLocator>();
 
 			TaskieRunner.RunWith(args, serviceLocator);
 		}

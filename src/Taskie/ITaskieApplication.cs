@@ -1,6 +1,6 @@
 namespace Taskie
 {
-	public interface IApplication
+	public interface ITaskieApplication
 	{
 		void Startup();
 		void Shutdown();

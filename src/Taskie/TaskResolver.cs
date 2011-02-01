@@ -13,9 +13,9 @@ namespace Taskie
 	{
 		private readonly IEnumerable<ITask> _allRunnableTasks;
 
-		public TaskResolver(IServiceLocator serviceLocator)
+		public TaskResolver(ITaskieServiceLocator taskieServiceLocator)
 		{
-			_allRunnableTasks = serviceLocator.GetAllInstances<ITask>();
+			_allRunnableTasks = taskieServiceLocator.GetAllInstances<ITask>();
 		}
 
 		public ITask ResolveTask(string friendlyTaskName)

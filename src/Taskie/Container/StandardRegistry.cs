@@ -6,7 +6,7 @@ namespace Taskie.Container
 	{
 		public StandardRegistry()
 		{
-			For<IApplication>().Use<DefaultApplication>();
+			For<ITaskieApplication>().Use<DefaultTaskieApplication>();
 		}
 	}
 }
