@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 include ".\functions_fileIO.ps1"
 
 properties { # General
-	$version = if ($env:build_number -ne $NULL) { $env:build_number } else { "0.999" }
+	$version = if ($env:build_number -ne $NULL) { $env:build_number } else { "0.120" }
 	$script:configuration = "Debug"
 }
 

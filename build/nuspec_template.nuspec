@@ -10,6 +10,7 @@
     <language>en-US</language>
   </metadata>
   <files>
-	<file src="Taskie.dll" target="lib" />
+	<file src="Taskie.dll" target="lib\net40" />
+	<file src="Taskie.pdb" target="lib\net40" />
   </files>
 </package>
