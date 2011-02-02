@@ -75,7 +75,11 @@ task compile -depends clean {
 	$config = $script:configuration
 
 	echo "Compiling in $config mode."
+
+	echo "Building Taskie solution."
 	exec { msbuild $main_solution_file /p:Configuration=$config /p:OutDir=""$build_output_build\\"" /consoleloggerparameters:ErrorsOnly }
+
+	echo "Building Sample solution."
 	exec { msbuild $sample_solution_file /p:Configuration=$config /consoleloggerparameters:ErrorsOnly }
 }
 
@@ -95,6 +99,37 @@ task create_deployment -depends set_to_release_mode, unit_tests, merge {
 	$nuspec.Save($nuspec_file)
 
 	exec { & $tools_nuget pack $nuspec_file -b $build_output_merged -o $build_output_nuget }
+}
+
+task publish_nuget_package -depends create_deployment {
+	$key_file = "$env:USERPROFILE\Documents\My Dropbox\Programming\NuGet_key.txt"
+
+	if (file_does_not_exist $key_file) {
+		throw "Couldn't find the NuGet key at $keyfile. Are you supposed to be running this?"
+	}
+
+	$key = Get-Content $key_file
+
+	$packages = dir "$build_output_nuget\*.nupkg"
+	echo "Packages to upload:"
+	$packages | ForEach { echo "$_" }
+
+	$yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Upload the package."
+	$no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "Don't upload the package."
+	$options = [System.Management.Automation.Host.ChoiceDescription[]]($no, $yes)
+
+	$result = $host.ui.PromptForChoice("Upload packages", "Do you want to upload these packages to the live server?", $options, 0) 
+
+	if ($result -eq 0) {
+		"Upload aborted."
+	}
+	elseif ($result -eq 1) {
+		$packages | ForEach { 
+		    $package = "$_"
+		    echo "Uploading $package..."
+		    exec { & $tools_nuget push -source "http://packages.nuget.org/v1/" $package $key }
+		}
+	}
 }
 
 function Get-FrameworkDirectory {

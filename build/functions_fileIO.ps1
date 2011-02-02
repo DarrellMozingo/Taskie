@@ -9,3 +9,7 @@ function create_directory($directory_name) {
 function copy_file($source_file, $destination_directory) {
 	cp $source_file -Destination $destination_directory
 }
+
+function file_does_not_exist($file) {
+	return (Test-Path $file) -eq $Frue
+}
