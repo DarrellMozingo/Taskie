@@ -88,13 +88,13 @@ task unit_tests -depends compile {
 	exec { & $tools_nunit $output_unitTests_dll /nologo /nodots /xml=$output_unitTests_xml }
 }
 
-task merge {
+task merge -depends set_to_release_mode, unit_tests {
 	$required_assemblies | ForEach { copy_file $_ $build_output_assemblies }
 
 	exec { & $tools_ilmerge /targetplatform:"v4,$framework_dir" /log /out:"$output_merged_assembly" /internalize:$merge_internalize_exclusions $required_assemblies }
 }
 
-task create_deployment -depends set_to_release_mode, unit_tests, merge {
+task create_nuget_package -depends merge {
 	$nuspec = [xml](Get-Content $nuspec_template)
 	$nuspec.package.metadata.version = $version
 	$nuspec.Save($nuspec_file)
@@ -102,7 +102,7 @@ task create_deployment -depends set_to_release_mode, unit_tests, merge {
 	exec { & $tools_nuget pack $nuspec_file -b $build_output_merged -o $build_output_nuget }
 }
 
-task publish_nuget_package -depends create_deployment {
+task publish_nuget_package -depends create_nuget_package {
 	$key_file = "$env:USERPROFILE\Documents\My Dropbox\Programming\NuGet_key.txt"
 
 	if (file_does_not_exist $key_file) {
