@@ -1,1 +1,2 @@
-powershell -NoProfile -ExecutionPolicy unrestricted -Command "& { Import-Module '.\build\tools\psake\psake.psm1'; $psake.use_exit_on_error = $true; invoke-psake '.\build\build.ps1' -framework 4.0 %*; Remove-Module psake }"
+@echo off
+powershell -NoProfile -ExecutionPolicy Unrestricted -Command "& { Import-Module '.\build\tools\psake\psake.psm1'; $psake.use_exit_on_error = $true; invoke-psake '.\build\build.ps1' %*; Remove-Module psake }"

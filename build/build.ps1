@@ -1,9 +1,10 @@
 $ErrorActionPreference = "Stop"
+$framework = "4.0"
 
 include ".\functions_fileIO.ps1"
 
-properties { # General
-	$version = if ($env:build_number -ne $NULL) { $env:build_number } else { "0.120" }
+properties {
+	$version = "0.120"
 	$script:configuration = "Debug"
 }
 
