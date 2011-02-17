@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 
 namespace Taskie
 {
@@ -6,10 +8,22 @@ namespace Taskie
 	{
 		public static ITaskieServiceLocator Locate()
 		{
-			// scan running directory for assemblies, load and look for implementation
-			// throw helpful exception if one isn't found
+			var allAssemblies = Directory.GetFiles(Environment.CurrentDirectory, "*.dll", SearchOption.AllDirectories)
+				.Where(assemblyName => assemblyName.EndsWith("Taskie.dll") == false);
 
-			throw new NotImplementedException();
+			foreach (var assembly in allAssemblies)
+			{
+				try
+				{
+					return (ITaskieServiceLocator)Activator.CreateInstanceFrom(assembly, typeof(ITaskieServiceLocator).FullName).Unwrap();
+				}
+				catch
+				{
+					continue;
+				}
+			}
+
+			throw new Exception("Couldn't find locator. WTF?");
 		}
 	}
 }
