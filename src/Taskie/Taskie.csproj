@@ -53,6 +53,7 @@
     <Compile Include="Container\StandardRegistry.cs" />
     <Compile Include="TaskDescriptionAttribute.cs" />
     <Compile Include="TaskieRunner.cs" />
+    <Compile Include="TaskieServiceLocatorScanner.cs" />
     <Compile Include="TaskInformation.cs" />
     <Compile Include="TaskMetaHelper.cs" />
     <Compile Include="TaskResolver.cs" />
