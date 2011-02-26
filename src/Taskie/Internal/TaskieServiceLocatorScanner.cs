@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Taskie.Internal
 {
-	public class TaskieServiceLocatorScanner
+	internal class TaskieServiceLocatorScanner
 	{
 		public static ITaskieServiceLocator FindValidImplementation()
 		{
