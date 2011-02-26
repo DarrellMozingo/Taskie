@@ -6,8 +6,8 @@ namespace Taskie.Runner
 	{
 		private static void Main(string[] args)
 		{
-			var taskieServiceLocator = TaskieServiceLocatorScanner.Locate();
-			TaskieRunner.RunWith(args, taskieServiceLocator);
+			var externalTaskieServiceLocator = TaskieServiceLocatorScanner.FindValidImplementation();
+			TaskieRunner.RunWith(args, externalTaskieServiceLocator);
 		}
 	}
 }

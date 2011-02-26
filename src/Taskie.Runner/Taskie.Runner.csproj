@@ -55,10 +55,6 @@
       <Project>{D42BE362-FC98-4D49-A39B-F6D4083AC45C}</Project>
       <Name>Taskie</Name>
     </ProjectReference>
-    <ProjectReference Include="..\test\test.csproj">
-      <Project>{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}</Project>
-      <Name>test</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

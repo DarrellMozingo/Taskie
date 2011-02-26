@@ -12,11 +12,20 @@ namespace Taskie.UnitTests.Internal
 	public class TaskieServiceLocatorScannerFixture
 	{
 		[Test]
-		public void Should_scan_all_local_assemblies_for_the_one_that_implements_the_service_locator()
+		public void Should_throw_an_exception_when_no_assemblies_with_a_service_locator_can_be_found()
+		{
+			Action runningLocatorWithNoAssembly = () => TaskieServiceLocatorScanner.FindValidImplementation().GetInstance<string>();
+
+			runningLocatorWithNoAssembly.ShouldThrowAn<InvalidOperationException>()
+				.Message.ShouldNotBeBlank();
+		}
+
+		[Test]
+		public void Should_scan_all_local_assemblies_for_one_that_implements_the_service_locator()
 		{
 			using (TestAssemblyGenerator.GenerateValidAssemblyThatThrows("expected_message"))
 			{
-				shouldFindLocatorThatThrows("expected_message");
+				shouldFindLocatorImplementationThatThrows("expected_message");
 			}
 		}
 
@@ -27,16 +36,14 @@ namespace Taskie.UnitTests.Internal
 			{
 				using (TestAssemblyGenerator.GenerateValidAssemblyThatThrows("expected_message_from_valid_assembly"))
 				{
-					shouldFindLocatorThatThrows("expected_message_from_valid_assembly");
+					shouldFindLocatorImplementationThatThrows("expected_message_from_valid_assembly");
 				}
 			}
 		}
 
-		private static void shouldFindLocatorThatThrows(string expectedExceptionMessage)
+		private static void shouldFindLocatorImplementationThatThrows(string expectedExceptionMessage)
 		{
-			var locator = TaskieServiceLocatorScanner.Locate();
-
-			Action runningLocator = () => locator.GetInstance<string>();
+			Action runningLocator = () => TaskieServiceLocatorScanner.FindValidImplementation().GetInstance<string>();
 
 			runningLocator.ShouldThrowAn<Exception>()
 				.Message.ShouldEqual(expectedExceptionMessage);

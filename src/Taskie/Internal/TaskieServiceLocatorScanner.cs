@@ -7,33 +7,36 @@ namespace Taskie.Internal
 {
 	public class TaskieServiceLocatorScanner
 	{
-		public static ITaskieServiceLocator Locate()
+		public static ITaskieServiceLocator FindValidImplementation()
 		{
 			var allAssemblies = Directory.GetFiles(Environment.CurrentDirectory, "*.dll", SearchOption.AllDirectories);
 
 			foreach (var assembly in allAssemblies)
 			{
 				var loadedAssembly = Assembly.LoadFrom(assembly);
-				var locatorTypes = loadedAssembly.GetTypes().Where(type => type.Implements<ITaskieServiceLocator>());
+				var serviceLocatorTypesFromAssembly = loadedAssembly.GetTypes().Where(type => type.Implements<ITaskieServiceLocator>());
 
-				if (locatorTypes.Count() != 1)
+				if (serviceLocatorTypesFromAssembly.Count() != 1)
 				{
 					continue;
 				}
 
-				var locatorType = locatorTypes.Single();
+				var serviceLocatorTypeFromAssembly = serviceLocatorTypesFromAssembly.Single();
 
 				try
 				{
-					return (ITaskieServiceLocator)Activator.CreateInstanceFrom(assembly, locatorType.FullName).Unwrap();
+					return (ITaskieServiceLocator)Activator.CreateInstanceFrom(assembly, serviceLocatorTypeFromAssembly.FullName).Unwrap();
 				}
-				catch (Exception)
+				catch
 				{
 					continue;
 				}
 			}
 
-			throw new Exception("Couldn't find locator. WTF?");
+			var message = "Couldn't find an assembly with a public implementation of {0} in the current running directory ({1}). Check that and try again."
+				.Substitute(typeof(ITaskieServiceLocator).Name, Environment.CurrentDirectory);
+
+			throw new InvalidOperationException(message);
 		}
 	}
 }
