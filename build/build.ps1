@@ -4,7 +4,7 @@ $framework = "4.0"
 include ".\functions_fileIO.ps1"
 
 properties {
-	$version = "0.120"
+	$version = "0.130"
 	$script:configuration = "Debug"
 }
 
