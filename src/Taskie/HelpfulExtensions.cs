@@ -38,5 +38,10 @@ namespace Taskie
 		{
 			return source.Equals(stringToMatch, StringComparison.InvariantCultureIgnoreCase);
 		}
+
+		public static bool Implements<T>(this Type type)
+		{
+			return typeof(T).IsAssignableFrom(type);
+		}
 	}
 }

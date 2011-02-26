@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskie.UnitTests", "Taskie.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskie.Runner", "Taskie.Runner\Taskie.Runner.csproj", "{E5CC50BB-A4A1-4FB9-8498-20EE3C34E143}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{E5CC50BB-A4A1-4FB9-8498-20EE3C34E143}.Release|Mixed Platforms.Build.0 = Release|x86
 		{E5CC50BB-A4A1-4FB9-8498-20EE3C34E143}.Release|x86.ActiveCfg = Release|x86
 		{E5CC50BB-A4A1-4FB9-8498-20EE3C34E143}.Release|x86.Build.0 = Release|x86
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2C74A22C-59F3-4FAE-9CEC-BB8CBC2CBD00}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

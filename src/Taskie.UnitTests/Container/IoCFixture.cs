@@ -6,21 +6,24 @@ using Taskie.UnitTests.TestingHelpers;
 
 namespace Taskie.UnitTests.Container
 {
-	[TestFixture]
-	public class When_creating_the_IoC_container : SpecBase
+	public class IoCFixture
 	{
-		private IContainer _container;
-
-		protected override void because()
+		[TestFixture]
+		public class When_creating_the_IoC_container : SpecBase
 		{
-			_container = IoC.CreateContainer();
-			_container.Inject(A.Fake<ITaskieServiceLocator>());
-		}
+			private IContainer _container;
 
-		[Test]
-		public void Should_build_a_valid_container_configuration()
-		{
-			_container.AssertConfigurationIsValid();
+			protected override void because()
+			{
+				_container = IoC.CreateContainer();
+				_container.Inject(A.Fake<ITaskieServiceLocator>());
+			}
+
+			[Test]
+			public void Should_build_a_valid_container_configuration()
+			{
+				_container.AssertConfigurationIsValid();
+			}
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿namespace Taskie.Runner
+﻿using Taskie.Internal;
+
+namespace Taskie.Runner
 {
 	internal class Program
 	{

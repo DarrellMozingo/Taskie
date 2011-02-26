@@ -35,6 +35,11 @@ namespace Taskie.UnitTests.TestingHelpers
 			item.ShouldEqual(true);
 		}
 
+		public static void ShouldBeFalse(this bool item)
+		{
+			item.ShouldEqual(false);
+		}
+
 		public static void ShouldNotBeBlank(this string item)
 		{
 			Assert.AreNotEqual(string.Empty, item);
