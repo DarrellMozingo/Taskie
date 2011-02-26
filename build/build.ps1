@@ -46,7 +46,8 @@ properties { # Executables
 
 properties { # Files
 	$main_solution_file = "$source_dir\Taskie.sln"
-	$sample_solution_file = "$sample_dir\StandardApp\src\StandardApp.sln"
+	$sample_solution_files = @("$sample_dir\AppUsingTaskieRunner\src\AppUsingTaskieRunner.sln",
+							   "$sample_dir\AppUsingOwnRunner\src\AppUsingOwnRunner.sln")
 
 	$output_unitTests_dll = "$build_output_build\Taskie.UnitTests.dll"
 	$output_unitTests_xml = "$build_reports_dir\UnitTestResults.xml"
@@ -80,8 +81,10 @@ task compile -depends clean {
 	echo "Building Taskie solution."
 	exec { msbuild $main_solution_file /p:Configuration=$config /p:OutDir=""$build_output_build\\"" /consoleloggerparameters:ErrorsOnly }
 
-	echo "Building Sample solution."
-	exec { msbuild $sample_solution_file /p:Configuration=$config /consoleloggerparameters:ErrorsOnly }
+	$sample_solution_files | ForEach { 
+		echo "Building $_ solution."
+		exec { msbuild $_ /p:Configuration=$config /consoleloggerparameters:ErrorsOnly }
+	}
 }
 
 task unit_tests -depends compile {
@@ -92,6 +95,8 @@ task merge -depends set_to_release_mode, unit_tests {
 	$required_assemblies | ForEach { copy_file $_ $build_output_assemblies }
 
 	exec { & $tools_ilmerge /targetplatform:"v4,$framework_dir" /log /out:"$output_merged_assembly" /internalize:$merge_internalize_exclusions $required_assemblies }
+
+	copy_file "$build_output_build\Taskie.Runner.exe" "$build_output_merged\Taskie.exe"
 }
 
 task create_nuget_package -depends merge {

@@ -9,12 +9,13 @@ namespace Taskie.Internal
 	{
 		public static ITaskieServiceLocator FindValidImplementation()
 		{
-			var allAssemblies = Directory.GetFiles(Environment.CurrentDirectory, "*.dll", SearchOption.AllDirectories);
+			var allAssemblyNames = Directory.GetFiles(Environment.CurrentDirectory, "*.dll", SearchOption.AllDirectories)
+				.Where(assemblyName => assemblyName != "Taskie.dll");
 
-			foreach (var assembly in allAssemblies)
+			foreach (var assemblyName in allAssemblyNames)
 			{
-				var loadedAssembly = Assembly.LoadFrom(assembly);
-				var serviceLocatorTypesFromAssembly = loadedAssembly.GetTypes().Where(type => type.Implements<ITaskieServiceLocator>());
+				var assembly = Assembly.LoadFrom(assemblyName);
+				var serviceLocatorTypesFromAssembly = assembly.GetTypes().Where(type => type.Implements<ITaskieServiceLocator>());
 
 				if (serviceLocatorTypesFromAssembly.Count() != 1)
 				{
@@ -25,7 +26,7 @@ namespace Taskie.Internal
 
 				try
 				{
-					return (ITaskieServiceLocator)Activator.CreateInstanceFrom(assembly, serviceLocatorTypeFromAssembly.FullName).Unwrap();
+					return (ITaskieServiceLocator)Activator.CreateInstanceFrom(assemblyName, serviceLocatorTypeFromAssembly.FullName).Unwrap();
 				}
 				catch
 				{

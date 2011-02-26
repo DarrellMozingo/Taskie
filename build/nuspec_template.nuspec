@@ -12,5 +12,6 @@
   <files>
 	<file src="Taskie.dll" target="lib\net40" />
 	<file src="Taskie.pdb" target="lib\net40" />
+	<file src="Taskie.exe" target="tools" />
   </files>
 </package>
